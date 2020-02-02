@@ -1,0 +1,25 @@
+version: '3'
+services:
+    php-server:
+        image: drummerpva/php-apache-mysql:1.0.0
+        # build:
+            # context: ./
+            # dockerfile: Dockerfile
+        # image: php-custom-server
+        volumes: 
+            - ./public:/var/www/html/
+        ports:
+            - "80:80"
+        links:
+            - db
+    db:
+        image: mysql:5.7
+        ports:
+            - "3306:3306"
+        environment: 
+            - MYSQL_ROOT_HOST=%
+            - MYSQL_DATABASE=docker
+            - MYSQL_USER=root
+            - MYSQL_ALLOW_EMPTY_PASSWORD=yes
+        volumes:
+            - ./db:/var/lib/mysql
